@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:inventory_app/screens/user/signup_screen.dart';
+import 'package:http/http.dart' as http;
+
 
 import '../home/homescreen.dart';
 
@@ -21,7 +25,7 @@ class _SignInScreenState extends State<SignInScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const HomeScreen();
+            return  const HomeScreen();
           },
         ),
       );
@@ -31,6 +35,26 @@ class _SignInScreenState extends State<SignInScreen> {
           content: Text('Please enter the details'),
         ),
       );
+    }
+  }
+
+  Future login() async{
+     var url = Uri.parse("http://192.168.176.126/inventory/login.php");
+    var response = await http.post(url, body: {
+      "email": _emailController.text,
+      "password": _passwordController.text,
+    });
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      if (data['success'] == true) {
+        print('Login successful');
+      } else {
+        print('Login failed');
+      }
+    }
+    else {
+      print('Error: ${response.statusCode}');
     }
   }
 
