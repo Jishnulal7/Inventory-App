@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_app/screens/product/product_screen.dart';
+
+
+import '../product/out_of_stock_product.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -43,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisSpacing: 16,
               ),
               children: const [
-                Product(),
+                ProductList(),
                 History(),
                 IN(),
                 Out(),
@@ -150,8 +152,8 @@ class History extends StatelessWidget {
   }
 }
 
-class Product extends StatelessWidget {
-  const Product({
+class ProductList extends StatelessWidget {
+  const ProductList({
     super.key,
   });
 
@@ -162,7 +164,7 @@ class Product extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const ProductScreen(),
+              builder: (context) =>  const OutofStockProductScreen(),
             ));
       },
       child: Container(

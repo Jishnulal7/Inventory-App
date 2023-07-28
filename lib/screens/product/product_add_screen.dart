@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/bloc/bloc_exports.dart';
 import 'package:inventory_app/models/product_model.dart';
+import 'package:inventory_app/services/guid_gen.dart';
 
 class AddProductScreen extends StatelessWidget {
   const AddProductScreen({
@@ -33,15 +34,16 @@ class AddProductScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Add'),
-              ),
-              TextButton(
                 onPressed: () {
-                  var product = Product(title: titleController.text);
+                  var product = Product(
+                      title: titleController.text, id: GUIDGen.generate());
                   context.read<ProductBloc>().add(AddProduct(product: product));
                   Navigator.pop(context);
                 },
+                child: const Text('Add'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context),
                 child: const Text('Cancel'),
               )
             ],
