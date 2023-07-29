@@ -51,6 +51,7 @@ class _SignInScreenState extends State<SignInScreen> {
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       if (data['result'] == 'success') {
+        // ignore: use_build_context_synchronously
         Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -90,7 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
         child: Column(
           children: [
             const SizedBox(
-              height: 100,
+              height: 180,
             ),
             Align(
               alignment: Alignment.center,

@@ -80,7 +80,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return const HomeScreen();
+            return const SignInScreen();
           },
         ),
       );
