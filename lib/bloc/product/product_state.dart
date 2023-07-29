@@ -3,17 +3,16 @@
 part of 'product_bloc.dart';
 
 class ProductState extends Equatable {
+  final List<Product> removedProducts;
+  final List<Product> pendingProducts;
+  final List<Product> completedProducts;
+  final List<Product> outofStockProducts;
   const ProductState({
     this.removedProducts = const <Product>[],
     this.pendingProducts = const <Product>[],
     this.completedProducts = const <Product>[],
     this.outofStockProducts = const <Product>[],
   });
-
-  final List<Product> removedProducts;
-  final List<Product> pendingProducts;
-  final List<Product> completedProducts;
-  final List<Product> outofStockProducts;
 
   @override
   List<Object> get props => [

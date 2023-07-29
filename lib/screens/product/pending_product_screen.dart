@@ -19,15 +19,16 @@ class PendingProductScreen extends StatelessWidget {
               height: 10,
             ),
             Center(
-              child:
-                  Chip(label: Text('${productList.length} Products')),
+              child: Chip(
+                label: Text(
+                  '${productList.length} Pending | ${state.completedProducts.length} Completed',
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: ProductList(productList: productList),
-            )
+            ProductList(productList: productList)
           ],
         );
       },

@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:inventory_app/screens/product/complete_order_product.dart';
-import 'package:inventory_app/screens/product/product_add_screen.dart';
+import 'package:inventory_app/screens/product/add_product_screen.dart';
 import 'package:inventory_app/screens/product/pending_product_screen.dart';
 import 'package:inventory_app/widgets/drawer.dart';
 
 import 'product/out_of_stock_product.dart';
 
-class TabScreen extends StatefulWidget {
-  const TabScreen({super.key});
-  static const id = 'tab_screen';
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+  static const id = 'home_screen';
 
   @override
-  State<TabScreen> createState() => _TabScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _TabScreenState extends State<TabScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final List<Map<String, dynamic>> _pageDetails = [
     {
       'pageName': const PendingProductScreen(),
@@ -34,6 +34,7 @@ class _TabScreenState extends State<TabScreen> {
 
   void _addProduct(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (context) => SingleChildScrollView(
         child: Container(
@@ -52,8 +53,11 @@ class _TabScreenState extends State<TabScreen> {
         title: Text(_pageDetails[_selectedPageIndex]['title']),
         actions: [
           IconButton(
-            onPressed: () => _addProduct(context),
-            icon: const Icon(Icons.add),
+            // onPressed: () => _addProduct(context),
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, 'signin_screen');
+            },
+            icon: const Icon(Icons.logout),
           )
         ],
       ),

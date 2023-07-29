@@ -19,14 +19,15 @@ class CompletedProductScreen extends StatelessWidget {
             ),
             Center(
               child: Chip(
-                  label: Text('${productList.length} Products')),
+                label: Text(
+                  '${productList.length} Products',
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: ProductList(productList: productList),
-            )
+            ProductList(productList: productList)
           ],
         );
       },

@@ -7,7 +7,7 @@ import '../../models/product_model.dart';
 // ignore: must_be_immutable
 class OutofStockProductScreen extends StatelessWidget {
   const OutofStockProductScreen({super.key});
-  static const id = 'prodauct_screen';
+  static const id = 'product_screen';
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProductBloc, ProductState>(
@@ -20,14 +20,15 @@ class OutofStockProductScreen extends StatelessWidget {
             ),
             Center(
               child: Chip(
-                  label: Text('${state.outofStockProducts.length} Products')),
+                label: Text(
+                  '${productList.length} Products',
+                ),
+              ),
             ),
             const SizedBox(
               height: 10,
             ),
-            Expanded(
-              child: ProductList(productList: productList),
-            )
+            ProductList(productList: productList)
           ],
         );
       },

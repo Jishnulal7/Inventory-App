@@ -21,13 +21,9 @@ ThemeData theme() {
     ),
     textTheme: const TextTheme(
         bodyMedium: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 20,
+          // fontWeight: FontWeight.bold,
+          fontSize: 13,
         ),
-        bodySmall: TextStyle(
-          color: Colors.white,
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        )),
+    )
   );
 }

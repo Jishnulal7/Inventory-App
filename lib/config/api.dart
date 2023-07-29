@@ -1,3 +1,3 @@
 class Api{
-  static const url = 'http://192.168.176.126/inventory/';
+  static const url = '192.168.1.43';
 }

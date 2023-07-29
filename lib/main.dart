@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_app/screens/tab_screen.dart';
+import 'package:inventory_app/screens/user/splash_screen.dart';
 import 'package:inventory_app/services/app_router.dart';
 import 'package:inventory_app/utils/themes.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,7 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
       storageDirectory: await getApplicationDocumentsDirectory());
-  //  Bloc.observer = SimpleBlocObserver();
+   Bloc.observer = AppBlocObserver();
   runApp(MyApp(
     appRouter: AppRouter(),
   ));
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ProductBloc(),
       child: MaterialApp(
         theme: theme(),
-        home:  const TabScreen(),
+        home:  const SplashScreen(),
         debugShowCheckedModeBanner: false,
         onGenerateRoute: appRouter.onGenerateRoute,
       ),

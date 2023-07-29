@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:inventory_app/screens/bin.dart';
+import 'package:inventory_app/screens/product/bin.dart';
 
-import 'package:inventory_app/screens/tab_screen.dart';
+import 'package:inventory_app/screens/home_screen.dart';
 
 import '../bloc/bloc_exports.dart';
 
@@ -17,17 +17,18 @@ class MyDrawer extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(10),
               width: double.infinity,
+              height: 50,
               color: Colors.deepPurple,
               child: const Text(
                 'Drawer',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(color: Colors.white,fontSize: 15),textAlign: TextAlign.left,
               ),
             ),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
                 return InkWell(
                   onTap: () => Navigator.of(context)
-                      .pushReplacementNamed(TabScreen.id),
+                      .pushReplacementNamed(HomeScreen.id),
                   child: ListTile(
                     title: const Text('Products'),
                     leading: const Icon(Icons.folder),

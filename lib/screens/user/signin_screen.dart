@@ -4,14 +4,14 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:inventory_app/config/api.dart';
+import 'package:inventory_app/screens/home_screen.dart';
 import 'package:inventory_app/screens/user/signup_screen.dart';
 import 'package:http/http.dart' as http;
 
-
-import '../home/homescreen.dart';
-
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
+  static const id = 'signin_screen';
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -27,7 +27,7 @@ class _SignInScreenState extends State<SignInScreen> {
         context,
         MaterialPageRoute(
           builder: (context) {
-            return  const HomeScreen();
+            return const HomeScreen();
           },
         ),
       );
@@ -40,31 +40,33 @@ class _SignInScreenState extends State<SignInScreen> {
     }
   }
 
-  Future login() async{
-     var url = Uri.parse("http://192.168.176.126/inventory/login.php");
+  Future login() async {
+    var url = Uri.parse("http://${Api.url}/inventory/login.php");
     var response = await http.post(url, body: {
       "email": _emailController.text,
       "password": _passwordController.text,
     });
-
+    print(response.statusCode);
+    print(response.body);
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      if (data['success'] == true) {
+      if (data['result'] == 'success') {
+        Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const HomeScreen();
+          },
+        ),
+      );
         print('Login successful');
       } else {
         print('Login failed');
       }
-    }
-    else {
+    } else {
       print('Error: ${response.statusCode}');
     }
   }
-
-  // @override
-  // void initState() {
-  //   obscureText = true;
-  //   super.initState();
-  // }
 
   @override
   void dispose() {
@@ -75,8 +77,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   final formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
 
+  final _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -180,7 +182,7 @@ class _SignInScreenState extends State<SignInScreen> {
               height: 16,
             ),
             ElevatedButton(
-              onPressed: checkLogin,
+              onPressed: login,
               child: const Text(
                 'Sign In',
                 style: TextStyle(

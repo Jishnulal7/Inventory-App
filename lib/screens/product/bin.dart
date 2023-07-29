@@ -24,20 +24,19 @@ class RecycleBin extends StatelessWidget {
             ],
           ),
           drawer: const MyDrawer(),
-          body:  Column(
+          body: Column(
             children: [
               const SizedBox(
                 height: 10,
               ),
               Center(
-                child: Chip(label: Text('${state.removedProducts.length} Products')),
+                child: Chip(
+                    label: Text('${state.removedProducts.length} Products')),
               ),
               const SizedBox(
                 height: 10,
               ),
-              Expanded(
-                child: ProductList(productList: state.removedProducts),
-              )
+              ProductList(productList: state.removedProducts),
             ],
           ),
         );

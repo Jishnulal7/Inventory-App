@@ -1,15 +1,17 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, use_build_context_synchronously
 
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../home/homescreen.dart';
+import 'package:http/http.dart';
+import 'package:inventory_app/config/api.dart';
+import 'package:inventory_app/screens/home_screen.dart';
 import 'signin_screen.dart';
-import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
+  static const id = 'signup_screen';
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();
@@ -43,29 +45,57 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  Future<void> register() async {
-    var url = Uri.parse("http://192.168.176.126/inventory/register.php");
-    var response = await http.post(url, body: {
-      "email": _emailController.text,
-      "password": _passwordController.text,
-    });
+  // Future<void> register() async {
+  //   var url = Uri.parse("http://${Api.url}/inventory/register.php");
+  //   var response = await http.post(url, body: {
+  //     "email": _emailController.text,
+  //     "password": _passwordController.text,
+  //   });
 
-    if (response.statusCode == 200) {
-      final data = json.decode(response.body);
-      if (data['success'] == true) {
-        print('Registration successful');
-      } else {
-        print('Registration failed');
-      }
-    }
-    else {
-      print('Error: ${response.statusCode}');
+  //   if (response.statusCode == 200) {
+  //     final data = json.decode(response.body);
+  //     if (data['success'] == true) {
+  //       print('Registration successful');
+  //     } else {
+  //       print('Registration failed');
+  //     }
+  //   } else {
+  //     print('Error: ${response.statusCode}');
+  //   }
+  // }
+
+  Future<void> register() async {
+    var data = {
+      'username': _nameController.text,
+      'email': _emailController.text,
+      'mobile': _mobileController.text,
+      'password': _passwordController.text,
+    };
+    var response =
+        await post(Uri.parse("http://${Api.url}/inventory/register.php"), body: data);
+    print(response.body);
+    if (jsonDecode(response.body)['result'] == 'success') {
+
+   Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) {
+            return const HomeScreen();
+          },
+        ),
+      );
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Registered')));
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Registraion Failed')));
     }
   }
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-
+  final _nameController = TextEditingController();
+  final _mobileController = TextEditingController();
   @override
   void dispose() {
     _passwordController.dispose();
@@ -103,6 +133,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter your name';
+                  }
+                  return null;
+                },
+                controller: _nameController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: const Color(0xFFF5F5F5),
+                  contentPadding: const EdgeInsets.all(20),
+                  hintText: 'Name',
+                  prefixIcon: Icon(
+                    CupertinoIcons.person,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: TextFormField(
                 controller: _emailController,
                 validator: (value) {
                   if (value!.isEmpty) {
@@ -122,6 +178,32 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   hintText: 'Email',
                   prefixIcon: Icon(
                     CupertinoIcons.mail,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: TextFormField(
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Enter your Mobile no';
+                  }
+                  return null;
+                },
+                controller: _mobileController,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  filled: true,
+                  fillColor: const Color(0xFFF5F5F5),
+                  contentPadding: const EdgeInsets.all(20),
+                  hintText: 'Mobile no.',
+                  prefixIcon: Icon(
+                    CupertinoIcons.phone,
                     color: Theme.of(context).primaryColor,
                   ),
                 ),
